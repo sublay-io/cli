@@ -1,4 +1,4 @@
-# Replyke Components → Shadcn-Style Component Registry
+# Sublay Components → Shadcn-Style Component Registry
 ## Comprehensive Conversion Guide
 
 This document outlines everything needed to convert the `@packages\ui\comments\` directory from an npm-package-based distribution model to a shadcn-style "copy-paste" component registry.
@@ -24,35 +24,35 @@ This document outlines everything needed to convert the `@packages\ui\comments\`
 ```
 packages/ui/comments/
 ├── social/
-│   ├── core/              # @replyke/comments-social-core
+│   ├── core/              # @sublay/comments-social-core
 │   │   ├── src/
 │   │   │   ├── context/   # Style config context
 │   │   │   ├── hooks/     # useSocialStyle, useSocialStyleConfig
 │   │   │   ├── interfaces/
 │   │   │   └── social-base-style.ts
-│   ├── react-js/          # @replyke/comments-social-react-js
+│   ├── react-js/          # @sublay/comments-social-react-js
 │   │   └── src/
 │   │       └── components/
-│   └── react-native/      # @replyke/comments-social-react-native
+│   └── react-native/      # @sublay/comments-social-react-native
 │       └── src/
 │           └── components/
 └── threaded/
-    ├── core/              # @replyke/comments-threaded-core
-    ├── react-js/          # @replyke/comments-threaded-react-js
-    └── react-native/      # @replyke/comments-threaded-react-native
+    ├── core/              # @sublay/comments-threaded-core
+    ├── react-js/          # @sublay/comments-threaded-react-js
+    └── react-native/      # @sublay/comments-threaded-react-native
 ```
 
 **Key Characteristics:**
 - Built & compiled to ESM/CJS
 - Style configuration through Context API and hooks
 - Props-based customization (prop explosion problem)
-- Installed via `npm install @replyke/comments-social-react-js`
+- Installed via `npm install @sublay/comments-social-react-js`
 
 ### Target State (Shadcn Model)
 ```
 cli/         # NEW standalone repo
 ├── packages/
-│   └── cli/                # @replyke/cli
+│   └── cli/                # @sublay/cli
 │       ├── src/
 │       │   ├── commands/
 │       │   │   ├── init.ts
@@ -85,7 +85,7 @@ cli/         # NEW standalone repo
 - Raw source code (no build step)
 - Hardcoded base styles directly in components
 - Users modify source directly for customization
-- Installed via `npx @replyke/cli add comments-social`
+- Installed via `npx @sublay/cli add comments-social`
 
 ---
 
@@ -157,7 +157,7 @@ cli/
 #### Before (Current npm Package):
 ```tsx
 // In component file
-import { useSocialStyleConfig } from '@replyke/comments-social-core';
+import { useSocialStyleConfig } from '@sublay/comments-social-core';
 
 function Comment() {
   const styleConfig = useSocialStyleConfig();
@@ -272,7 +272,7 @@ const HeartButton = ({ userUpvoted, ...props }) => {
 Before:
 ```tsx
 // SocialCommentSection.tsx
-import { SocialStyleConfigProvider } from '@replyke/comments-social-core';
+import { SocialStyleConfigProvider } from '@sublay/comments-social-core';
 
 export default function SocialCommentSection({ styleConfig }) {
   return (
@@ -327,9 +327,9 @@ interface SocialCommentSectionProps {
 
 **Current Import Pattern:**
 ```tsx
-import { useSocialStyle, SocialStyleConfig } from '@replyke/comments-social-core';
-import { SortByButton, CommentsFeed } from '@replyke/comments-social-core';
-import { ReplykeAvatar } from '@replyke/ui-core-react-js';
+import { useSocialStyle, SocialStyleConfig } from '@sublay/comments-social-core';
+import { SortByButton, CommentsFeed } from '@sublay/comments-social-core';
+import { SublayAvatar } from '@sublay/ui-core-react-js';
 ```
 
 **New Import Pattern:**
@@ -339,8 +339,8 @@ import { SortByButton } from './components/SortByButton';
 import { CommentsFeed } from './components/CommentsFeed';
 
 // External dependencies (user must install)
-import { useCommentSection } from '@replyke/react-js';
-import { ReplykeAvatar } from '@replyke/ui-core-react-js';
+import { useCommentSection } from '@sublay/react-js';
+import { SublayAvatar } from '@sublay/ui-core-react-js';
 ```
 
 **Key Changes:**
@@ -453,11 +453,11 @@ export function HeartButton({ userUpvoted, onToggle, className }) {
 **package.json:**
 ```json
 {
-  "name": "@replyke/cli",
+  "name": "@sublay/cli",
   "version": "0.1.0",
-  "description": "CLI for installing Replyke UI components",
+  "description": "CLI for installing Sublay UI components",
   "bin": {
-    "replyke": "./dist/index.js"
+    "sublay": "./dist/index.js"
   },
   "files": ["dist"],
   "scripts": {
@@ -482,7 +482,7 @@ export function HeartButton({ userUpvoted, onToggle, className }) {
 
 ### Task 2.2: Implement `init` Command
 
-**Purpose:** Set up project configuration for Replyke components
+**Purpose:** Set up project configuration for Sublay components
 
 **File:** `packages/cli/src/commands/init.ts`
 
@@ -492,11 +492,11 @@ export function HeartButton({ userUpvoted, onToggle, className }) {
    - Component install directory (default: `src/components/ui`)
    - Styling approach (styled vs tailwind)
    - Platform (react, react-native, expo)
-3. Create `replyke.json` config file
+3. Create `sublay.json` config file
 4. Check for required peer dependencies
 5. Optionally install peer dependencies
 
-**Configuration File (`replyke.json`):**
+**Configuration File (`sublay.json`):**
 ```json
 {
   "platform": "react",
@@ -562,9 +562,9 @@ export async function init() {
     },
   };
 
-  await fs.writeJson('replyke.json', config, { spaces: 2 });
+  await fs.writeJson('sublay.json', config, { spaces: 2 });
 
-  console.log('✅ Configuration saved to replyke.json');
+  console.log('✅ Configuration saved to sublay.json');
 
   // Check peer dependencies
   await checkDependencies(answers.platform);
@@ -572,8 +572,8 @@ export async function init() {
 
 async function checkDependencies(platform: string) {
   const requiredDeps = platform === 'react'
-    ? ['@replyke/react-js', '@replyke/ui-core-react-js']
-    : ['@replyke/react-native', '@replyke/ui-core-react-native'];
+    ? ['@sublay/react-js', '@sublay/ui-core-react-js']
+    : ['@sublay/react-native', '@sublay/ui-core-react-native'];
 
   const packageJson = await fs.readJson('package.json');
   const missing = requiredDeps.filter(
@@ -604,7 +604,7 @@ async function checkDependencies(platform: string) {
 **File:** `packages/cli/src/commands/add.ts`
 
 **Flow:**
-1. Read `replyke.json` to get user preferences
+1. Read `sublay.json` to get user preferences
 2. Fetch component registry metadata
 3. Download component files
 4. Transform imports to match user's project structure
@@ -621,8 +621,8 @@ async function checkDependencies(platform: string) {
   "version": "1.0.0",
   "description": "Social-style comment section with likes and replies",
   "dependencies": [
-    "@replyke/react-js@^6.0.0",
-    "@replyke/ui-core-react-js@^6.0.0"
+    "@sublay/react-js@^6.0.0",
+    "@sublay/ui-core-react-js@^6.0.0"
   ],
   "files": [
     {
@@ -641,7 +641,7 @@ async function checkDependencies(platform: string) {
       "type": "lib"
     }
   ],
-  "registryUrl": "https://raw.githubusercontent.com/replyke/cli/main/registry/react/comments-social/styled"
+  "registryUrl": "https://raw.githubusercontent.com/sublay-io/cli/main/registry/react/comments-social/styled"
 }
 ```
 
@@ -654,11 +654,11 @@ import ora from 'ora';
 import path from 'path';
 
 export async function add(componentName: string) {
-  const config = await fs.readJson('replyke.json');
+  const config = await fs.readJson('sublay.json');
   const spinner = ora(`Fetching ${componentName}...`).start();
 
   // Fetch registry metadata
-  const registryUrl = `https://raw.githubusercontent.com/replyke/cli/main/registry/${config.platform}/${componentName}/${config.style}/registry.json`;
+  const registryUrl = `https://raw.githubusercontent.com/sublay-io/cli/main/registry/${config.platform}/${componentName}/${config.style}/registry.json`;
   const response = await fetch(registryUrl);
   const registry = await response.json();
 
@@ -749,17 +749,17 @@ registry/
 2. **Add file header comments:**
    ```tsx
    /**
-    * Replyke Social Comment Section
+    * Sublay Social Comment Section
     *
     * A complete comment system with likes, replies, and moderation.
     *
-    * Installation: npx @replyke/cli add comments-social
+    * Installation: npx @sublay/cli add comments-social
     *
     * Required dependencies:
-    * - @replyke/react-js ^6.0.0
-    * - @replyke/ui-core-react-js ^6.0.0
+    * - @sublay/react-js ^6.0.0
+    * - @sublay/ui-core-react-js ^6.0.0
     *
-    * @see https://docs.replyke.com/components/comments-social
+    * @see https://docs.sublay.com/components/comments-social
     */
    ```
 
@@ -782,11 +782,11 @@ registry/
 4. **Use explicit imports:**
    ```tsx
    // ✅ Good - Explicit
-   import { useCommentSection } from '@replyke/react-js';
-   import { Comment as CommentType } from '@replyke/react-js';
+   import { useCommentSection } from '@sublay/react-js';
+   import { Comment as CommentType } from '@sublay/react-js';
 
    // ❌ Avoid - Barrel imports can cause issues
-   import { useCommentSection, Comment as CommentType } from '@replyke/react-js';
+   import { useCommentSection, Comment as CommentType } from '@sublay/react-js';
    ```
 
 ### Task 3.3: Create registry.json for Each Component
@@ -799,11 +799,11 @@ registry/
   "style": "styled",
   "version": "1.0.0",
   "description": "Social-style comment section with likes and replies",
-  "author": "Replyke",
+  "author": "Sublay",
   "license": "Apache-2.0",
   "dependencies": [
-    "@replyke/react-js@^6.0.0",
-    "@replyke/ui-core-react-js@^6.0.0"
+    "@sublay/react-js@^6.0.0",
+    "@sublay/ui-core-react-js@^6.0.0"
   ],
   "files": [
     {
@@ -861,7 +861,7 @@ registry/
       "description": "Utility functions"
     }
   ],
-  "registryUrl": "https://raw.githubusercontent.com/replyke/cli/main/registry/react/comments-social/styled"
+  "registryUrl": "https://raw.githubusercontent.com/sublay-io/cli/main/registry/react/comments-social/styled"
 }
 ```
 
@@ -888,9 +888,9 @@ Skip for MVP. Test manually in one project first.
 
 **Steps:**
 1. Create fresh React app: `npx create-vite@latest test-app --template react-ts`
-2. Install dependencies: `npm install @replyke/react-js @replyke/ui-core-react-js`
-3. Initialize Replyke: `npx @replyke/cli init`
-4. Add component: `npx @replyke/cli add comments-social`
+2. Install dependencies: `npm install @sublay/react-js @sublay/ui-core-react-js`
+3. Initialize Sublay: `npx @sublay/cli init`
+4. Add component: `npx @sublay/cli add comments-social`
 5. Import and use:
    ```tsx
    import { SocialCommentSection } from './components/ui/social-comment-section';
@@ -927,8 +927,8 @@ Skip for MVP. Test manually in one project first.
 **Question:** What should users install?
 
 **Current npm packages:**
-- Users install: `@replyke/comments-social-react-js`
-- Gets automatically: `@replyke/comments-social-core`, `@replyke/ui-core-react-js`
+- Users install: `@sublay/comments-social-react-js`
+- Gets automatically: `@sublay/comments-social-core`, `@sublay/ui-core-react-js`
 
 **Shadcn approach:**
 - Users install: Base platform package
@@ -939,16 +939,16 @@ Skip for MVP. Test manually in one project first.
 **Required user installations:**
 ```bash
 # For React
-npm install @replyke/react-js @replyke/ui-core-react-js
+npm install @sublay/react-js @sublay/ui-core-react-js
 
 # For React Native
-npm install @replyke/react-native @replyke/ui-core-react-native
+npm install @sublay/react-native @sublay/ui-core-react-native
 
 # For Expo
-npm install @replyke/expo @replyke/ui-core-react-native
+npm install @sublay/expo @sublay/ui-core-react-native
 ```
 
-**Note:** According to point #2 in requirements, users typically install `@replyke/react-js` which ships core under the hood. This is perfect for shadcn-style!
+**Note:** According to point #2 in requirements, users typically install `@sublay/react-js` which ships core under the hood. This is perfect for shadcn-style!
 
 ### Decision 3: Component Naming Convention
 
@@ -1005,7 +1005,7 @@ import { SocialCommentSection } from './components/ui/social-comment-section';
 ## 📝 Implementation Checklist
 
 ### Prerequisites
-- [ ] Create new standalone repository: `replyke-components`
+- [ ] Create new standalone repository: `sublay-components`
 - [ ] Copy `@packages/ui/comments/` to new repo
 - [ ] Initialize git, pnpm workspace
 
@@ -1063,8 +1063,8 @@ import { SocialCommentSection } from './components/ui/social-comment-section';
 ### Phase 4: Testing (MEDIUM PRIORITY)
 
 - [ ] Create test React project
-- [ ] Run `npx @replyke/cli init`
-- [ ] Run `npx @replyke/cli add comments-social`
+- [ ] Run `npx @sublay/cli init`
+- [ ] Run `npx @sublay/cli add comments-social`
 - [ ] Verify components render
 - [ ] Verify TypeScript types work
 - [ ] Verify users can modify styles
@@ -1086,8 +1086,8 @@ import { SocialCommentSection } from './components/ui/social-comment-section';
 1. **Repository exists** with structure: `packages/cli/` and `registry/`
 2. **CLI works** for one component:
    ```bash
-   npx @replyke/cli init
-   npx @replyke/cli add comments-social
+   npx @sublay/cli init
+   npx @sublay/cli add comments-social
    ```
 3. **Components are transformed:**
    - No `-core` dependencies
@@ -1115,7 +1115,7 @@ import { SocialCommentSection } from './components/ui/social-comment-section';
 ## 🔑 Key Reminders
 
 1. **Eliminate `-core` entirely** - Hardcode all styles
-2. **Users install platform packages** (`@replyke/react-js`, not `@replyke/core`)
+2. **Users install platform packages** (`@sublay/react-js`, not `@sublay/core`)
 3. **Examples/docs are LOW priority** - Focus on core functionality
 4. **Start with inline styles** - Tailwind can come later
 5. **Test in a real project** - Don't assume it works
@@ -1143,7 +1143,7 @@ import { SocialCommentSection } from './components/ui/social-comment-section';
 
 **Immediate Next Steps:**
 
-1. Create new repo: `mkdir replyke-components && cd replyke-components`
+1. Create new repo: `mkdir sublay-components && cd sublay-components`
 2. Copy comments directory: `cp -r ../monorepo/packages/ui/comments ./temp-source`
 3. Start with one component: Pick `HeartButton.tsx`
 4. Transform it:

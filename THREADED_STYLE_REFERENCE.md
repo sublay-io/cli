@@ -112,7 +112,7 @@ styleConfig.newCommentFormProps.postButtonFontColor → "#FFFFFF"
 
 ### Before:
 ```typescript
-import { useThreadedStyleConfig } from '@replyke/comments-threaded-core';
+import { useThreadedStyleConfig } from '@sublay/comments-threaded-core';
 
 function Component() {
   const { styleConfig } = useThreadedStyleConfig();

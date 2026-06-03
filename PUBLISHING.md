@@ -1,4 +1,4 @@
-# Publishing Guide for Replyke CLI & Components
+# Publishing Guide for Sublay CLI & Components
 
 This guide covers how to publish the CLI to npm, update the component registry, and how developers use the CLI.
 
@@ -8,9 +8,9 @@ This guide covers how to publish the CLI to npm, update the component registry, 
 
 This is how developers will use your published CLI:
 
-### 1. Initialize Replyke in their project
+### 1. Initialize Sublay in their project
 ```bash
-npx @replyke/cli init
+npx @sublay/cli init
 ```
 
 This prompts them to choose:
@@ -18,7 +18,7 @@ This prompts them to choose:
 - **Style**: Inline Styles or Tailwind CSS
 - **Component path**: Where to install components (default: `src/components`)
 
-Creates a `replyke.json` config file:
+Creates a `sublay.json` config file:
 ```json
 {
   "platform": "react",
@@ -36,10 +36,10 @@ Creates a `replyke.json` config file:
 ### 2. Install components
 ```bash
 # Install threaded comments (Reddit-style)
-npx @replyke/cli add comments-threaded
+npx @sublay/cli add comments-threaded
 
 # Install social comments (Instagram-style)
-npx @replyke/cli add comments-social
+npx @sublay/cli add comments-social
 ```
 
 ### 3. Use in their app
@@ -71,7 +71,7 @@ Developers can modify the component files directly - that's the whole point of t
    ```
    Use your npm account credentials.
 
-2. **Verify your npm account has access to the @replyke scope:**
+2. **Verify your npm account has access to the @sublay scope:**
    - If not, you need to create the scope on npmjs.com first
 
 ### Publishing Process
@@ -94,7 +94,7 @@ Developers can modify the component files directly - that's the whole point of t
    pnpm link --global
 
    # Then in any test project
-   replyke add comments-social
+   sublay add comments-social
 
    # When done testing, unlink
    pnpm unlink --global
@@ -113,7 +113,7 @@ Developers can modify the component files directly - that's the whole point of t
 
 5. **Verify it worked:**
    ```bash
-   npm view @replyke/cli
+   npm view @sublay/cli
    ```
 
 ---
@@ -143,7 +143,7 @@ registry/
 ### 2. Update registry.json
 
 For each component, make sure `registry.json` has:
-- Correct `registryUrl` pointing to: `https://raw.githubusercontent.com/replyke/cli/main/registry/react/{component-name}/styled`
+- Correct `registryUrl` pointing to: `https://raw.githubusercontent.com/sublay-io/cli/main/registry/react/{component-name}/styled`
 - All files listed in the `files` array
 - Correct dependencies
 
@@ -164,10 +164,10 @@ After pushing, test that the CLI can fetch the components:
 
 ```bash
 # In a test project
-npx @replyke/cli add comments-social
+npx @sublay/cli add comments-social
 
 # Or if testing locally:
-npx @replyke/cli add comments-social --registry https://raw.githubusercontent.com/replyke/cli/main/registry
+npx @sublay/cli add comments-social --registry https://raw.githubusercontent.com/sublay-io/cli/main/registry
 ```
 
 ---
@@ -209,7 +209,7 @@ git commit -m "Update components"
 git push origin main
 
 # 2. In a test project, use current published CLI
-npx @replyke/cli@latest add comments-social
+npx @sublay/cli@latest add comments-social
 ```
 
 ### Test CLI Changes (without publishing)
@@ -224,7 +224,7 @@ pnpm link --global
 
 # 3. Test in another project
 cd /path/to/test-project
-replyke add comments-social
+sublay add comments-social
 
 # 4. Unlink when done
 cd /path/to/cli/packages/cli
@@ -252,7 +252,7 @@ Follow semantic versioning (semver):
 ### CLI can't fetch components
 - Verify registry URL in registry.json is correct
 - Check that files are pushed to GitHub main branch
-- Test URL manually: `curl https://raw.githubusercontent.com/replyke/cli/main/registry/react/comments-social/styled/registry.json`
+- Test URL manually: `curl https://raw.githubusercontent.com/sublay-io/cli/main/registry/react/comments-social/styled/registry.json`
 
 ### Components install but have errors
 - Check all file paths in registry.json match actual file structure
@@ -281,5 +281,5 @@ git push origin main
 pnpm link --global
 
 # View published package
-npm view @replyke/cli
+npm view @sublay/cli
 ```

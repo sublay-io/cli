@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Replyke CLI is a shadcn-style component distribution system for Replyke comment systems. It allows users to install pre-built, customizable React and React Native comment components directly into their projects using a CLI tool.
+Sublay CLI is a shadcn-style component distribution system for Sublay comment systems. It allows users to install pre-built, customizable React and React Native comment components directly into their projects using a CLI tool.
 
 ## Development Commands
 
@@ -27,7 +27,7 @@ pnpm cli add comments-threaded
 ### Testing the CLI
 From a separate test project:
 ```bash
-# Initialize Replyke config
+# Initialize Sublay config
 node /path/to/cli/packages/cli/dist/index.js init
 
 # Add components
@@ -39,7 +39,7 @@ node /path/to/cli/packages/cli/dist/index.js add comments-social
 
 ### Workspace Structure
 This is a pnpm workspace monorepo with two main parts:
-- `packages/cli/` - The CLI tool itself (published as `@replyke/cli`)
+- `packages/cli/` - The CLI tool itself (published as `@sublay/cli`)
 - `registry/` - Component registry containing all installable components
 
 ### CLI Architecture (`packages/cli/src/`)
@@ -52,11 +52,11 @@ This is a pnpm workspace monorepo with two main parts:
 1. **`init.ts`** - Project initialization
    - Detects project type (React/React Native/Expo)
    - Prompts user for platform, styling (styled/tailwind), and install path
-   - Creates `replyke.json` config file
+   - Creates `sublay.json` config file
    - Checks and optionally installs peer dependencies
 
 2. **`add.ts`** - Component installation
-   - Reads `replyke.json` config
+   - Reads `sublay.json` config
    - Fetches component metadata from registry
    - Downloads component files (locally during dev, from GitHub in production)
    - Transforms imports (changes `../files/` to `../components/`)
@@ -111,7 +111,7 @@ registry/
   "style": "styled",
   "version": "1.0.0",
   "description": "...",
-  "dependencies": ["@replyke/react-js@^6.0.0"],
+  "dependencies": ["@sublay/react-js@^6.0.0"],
   "files": [
     {
       "path": "files/component.tsx",
@@ -119,7 +119,7 @@ registry/
       "description": "..."
     }
   ],
-  "registryUrl": "https://raw.githubusercontent.com/replyke/cli/main/registry/react/comments-threaded/styled",
+  "registryUrl": "https://raw.githubusercontent.com/sublay-io/cli/main/registry/react/comments-threaded/styled",
   "exports": {
     "mainComponent": "ThreadedCommentSection",
     "mainFile": "threaded-comment-section",
@@ -131,7 +131,7 @@ registry/
 ### File Installation Flow
 
 1. User runs `add comments-threaded`
-2. CLI reads `replyke.json` to get platform/style preferences
+2. CLI reads `sublay.json` to get platform/style preferences
 3. Fetches `registry.json` from `registry/{platform}/{component}/{style}/`
 4. Downloads each file listed in registry.json
 5. Transforms imports (registry structure → user's project structure)
@@ -150,7 +150,7 @@ Components are distributed as source code (not npm packages) following the shadc
 - Components can be customized directly
 - No hidden dependencies on core packages' internals
 - Styles are inline and editable (or Tailwind classes)
-- All @replyke/comments-*-core dependencies have been removed
+- All @sublay/comments-*-core dependencies have been removed
 
 ## Current Status
 
@@ -176,9 +176,9 @@ When copying components from registry to user's project, imports must be transfo
 
 ### Peer Dependencies
 Components require these peer dependencies:
-- **React**: `@replyke/react-js`, `@replyke/ui-core-react-js`
-- **React Native**: `@replyke/react-native`, `@replyke/ui-core-react-native`
-- **Expo**: `@replyke/expo`, `@replyke/ui-core-react-native`
+- **React**: `@sublay/react-js`, `@sublay/ui-core-react-js`
+- **React Native**: `@sublay/react-native`, `@sublay/ui-core-react-native`
+- **Expo**: `@sublay/expo`, `@sublay/ui-core-react-native`
 
 ### Local vs Production Registry
 - **Local Development**: Registry is loaded from `registry/` directory (relative to CLI package)
@@ -194,7 +194,7 @@ Components require these peer dependencies:
    - `hooks/` - React hooks
    - `utils/` - Utility functions
    - `context/` - Context providers
-4. Ensure no @replyke/comments-*-core imports (components should be self-contained)
+4. Ensure no @sublay/comments-*-core imports (components should be self-contained)
 5. Use relative imports between files
 6. Add `exports` metadata to registry.json for proper barrel export generation
 

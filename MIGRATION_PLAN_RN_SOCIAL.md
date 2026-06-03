@@ -21,9 +21,9 @@ Migrate the React Native social comment section from `packages/ui/comments/socia
 - Add performance optimizations (useMemo, useCallback)
 
 ### 3. **Styling System Simplification**
-- **FROM**: `useSocialStyle` hook + `styleConfig` prop (from `@replyke/comments-social-core`)
+- **FROM**: `useSocialStyle` hook + `styleConfig` prop (from `@sublay/comments-social-core`)
 - **TO**: Simple theme-based conditionals: `theme === 'dark' ? DARK : LIGHT`
-- Remove dependency on `@replyke/comments-social-core`
+- Remove dependency on `@sublay/comments-social-core`
 
 ### 4. **Callbacks System**
 - **FROM**: Passed as prop from parent
@@ -111,7 +111,7 @@ registry/react-native/comments-social/styled/
    - Remove SocialStyleConfigProvider wrapper entirely
    - Include sheets in children
    - Add useMemo optimizations
-   - Remove dependency on `@replyke/comments-social-core`
+   - Remove dependency on `@sublay/comments-social-core`
 
 ### Phase 3: Main Component (1 file)
 
@@ -242,7 +242,7 @@ registry/react-native/comments-social/styled/
 24. **Create `registry.json`**
     - platform: "react-native"
     - style: "styled"
-    - dependencies: [@replyke/core, @replyke/ui-core-react-native, @gorhom/bottom-sheet]
+    - dependencies: [@sublay/core, @sublay/ui-core-react-native, @gorhom/bottom-sheet]
     - List all 28 component/hook/util files
 
 ## Color Mapping (from web version)
@@ -275,17 +275,17 @@ Use these theme-based color mappings throughout:
 ## Dependencies Changes
 
 ### Remove
-- `@replyke/comments-social-core` (entire package)
+- `@sublay/comments-social-core` (entire package)
 
 ### Keep
-- `@replyke/core` (comment logic, same for RN and web)
-- `@replyke/ui-core-react-native` (RN UI primitives)
+- `@sublay/core` (comment logic, same for RN and web)
+- `@sublay/ui-core-react-native` (RN UI primitives)
 - `@gorhom/bottom-sheet` (RN bottom sheets)
 
 ### Update imports
 ```tsx
 // BEFORE
-import { useSocialStyleConfig } from "@replyke/comments-social-core";
+import { useSocialStyleConfig } from "@sublay/comments-social-core";
 const { styleConfig } = useSocialStyleConfig();
 
 // AFTER
@@ -297,7 +297,7 @@ const { theme } = useUIState();
 
 After migration:
 - [ ] All files created in correct directory structure
-- [ ] No references to `@replyke/comments-social-core`
+- [ ] No references to `@sublay/comments-social-core`
 - [ ] No references to `styleConfig`
 - [ ] All components use theme-based styling
 - [ ] Theme prop works correctly

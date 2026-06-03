@@ -5,9 +5,9 @@ Run `cd playground && npx tsc --noEmit` to reproduce.
 
 ---
 
-## Issue 1: `useCommentVotes` no longer exported from `@replyke/react-js`
+## Issue 1: `useCommentVotes` no longer exported from `@sublay/react-js`
 
-**Error**: `TS2305 — Module '"@replyke/react-js"' has no exported member 'useCommentVotes'`
+**Error**: `TS2305 — Module '"@sublay/react-js"' has no exported member 'useCommentVotes'`
 
 The hook was removed or renamed in v7. Components that imported it will fail at runtime.
 
@@ -37,26 +37,26 @@ The `user` field on `Comment` changed from required to optional in v7. All direc
 
 ---
 
-## Issue 3: `@replyke/ui-core-react-js` and `lucide-react` components incompatible with React 19
+## Issue 3: `@sublay/ui-core-react-js` and `lucide-react` components incompatible with React 19
 
 **Error**: `TS2786 — 'X' cannot be used as a JSX component` (type `FunctionComponent<Props>` is not assignable — `ReactNode | Promise<ReactNode>` vs `ReactNode`)
 
 React 19 tightened its JSX return type. Packages compiled against `@types/react@18` return `ReactNode | Promise<ReactNode>` from their components, which React 19's JSX transformer no longer accepts.
 
-**From `@replyke/ui-core-react-js`:**
+**From `@sublay/ui-core-react-js`:**
 - `EllipsisIcon` — comments-social (styled + tailwind)
 - `HeartFullIcon`, `HeartIcon` — comments-social (styled + tailwind)
 - `Modal` — comments-social (styled + tailwind), comments-threaded (styled + tailwind)
 - `FlagIcon` — comments-social (styled + tailwind), comments-threaded (styled + tailwind)
 - `Icon` — notifications-control (styled + tailwind)
 
-**From `@replyke/react-js` / `@replyke/core`:**
+**From `@sublay/react-js` / `@sublay/core`:**
 - `CommentSectionProvider` — comments-social (styled + tailwind), comments-threaded (styled + tailwind)
 
 **From `lucide-react`:**
 - `Bell`, `Loader2`, `CheckCheck` — notifications-control (styled + tailwind)
 
-**Fix:** `@replyke/ui-core-react-js` (and `@replyke/core` / `@replyke/react-js`) need to be rebuilt and republished with `@types/react@19`. For `lucide-react`, upgrade to a version that ships React 19–compatible types (v0.469+ added React 19 support).
+**Fix:** `@sublay/ui-core-react-js` (and `@sublay/core` / `@sublay/react-js`) need to be rebuilt and republished with `@types/react@19`. For `lucide-react`, upgrade to a version that ships React 19–compatible types (v0.469+ added React 19 support).
 
 ---
 
@@ -74,7 +74,7 @@ The v7 notification data object no longer includes an `initiatorAvatar` field on
 
 ---
 
-## Issue 5: `FlagIcon` props changed in `@replyke/ui-core-react-js` v7
+## Issue 5: `FlagIcon` props changed in `@sublay/ui-core-react-js` v7
 
 **Error**: `TS2322 — Type '{ size: number; className: string; }' is not assignable to type 'IntrinsicAttributes & IconProps'`
 

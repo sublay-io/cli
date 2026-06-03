@@ -1,8 +1,8 @@
-# Replyke CLI & Component Registry
+# Sublay CLI & Component Registry
 
-Shadcn-style component distribution for Replyke social feature systems. Install fully customizable, source-code components directly into your project.
+Shadcn-style component distribution for Sublay social feature systems. Install fully customizable, source-code components directly into your project.
 
-**Published as**: `@replyke/cli` on npm (v0.1.24)
+**Published as**: `@sublay/cli` on npm (v0.1.24)
 
 ---
 
@@ -10,10 +10,10 @@ Shadcn-style component distribution for Replyke social feature systems. Install 
 
 ```bash
 # Initialize your project
-npx @replyke/cli init
+npx @sublay/cli init
 
 # Add a component
-npx @replyke/cli add comments-threaded
+npx @sublay/cli add comments-threaded
 ```
 
 ---
@@ -29,8 +29,8 @@ npx @replyke/cli add comments-threaded
 | `notifications-control` | ✓ | ✓ |
 
 **Peer dependencies:**
-- `comments-social`, `comments-threaded`: `@replyke/react-js`, `@replyke/ui-core-react-js`
-- `notifications-control`: `@replyke/react-js`, `framer-motion`, `lucide-react`
+- `comments-social`, `comments-threaded`: `@sublay/react-js`, `@sublay/ui-core-react-js`
+- `notifications-control`: `@sublay/react-js`, `framer-motion`, `lucide-react`
 
 ### React Native
 
@@ -39,7 +39,7 @@ npx @replyke/cli add comments-threaded
 | `comments-social` | ✓ | ✓ |
 | `comments-threaded` | — | ✓ |
 
-**Peer dependencies:** `@replyke/react-native`, `@replyke/ui-core-react-native`, `@gorhom/bottom-sheet` (+ `nativewind` for tailwind variants)
+**Peer dependencies:** `@sublay/react-native`, `@sublay/ui-core-react-native`, `@gorhom/bottom-sheet` (+ `nativewind` for tailwind variants)
 
 ---
 
@@ -47,10 +47,10 @@ npx @replyke/cli add comments-threaded
 
 ### `init`
 
-Initializes Replyke in your project. Creates a `replyke.json` config file.
+Initializes Sublay in your project. Creates a `sublay.json` config file.
 
 ```bash
-npx @replyke/cli init
+npx @sublay/cli init
 ```
 
 Prompts for:
@@ -63,12 +63,12 @@ Prompts for:
 Installs a component from the registry as editable source code into your project.
 
 ```bash
-npx @replyke/cli add comments-threaded
-npx @replyke/cli add comments-social
-npx @replyke/cli add notifications-control
+npx @sublay/cli add comments-threaded
+npx @sublay/cli add comments-social
+npx @sublay/cli add notifications-control
 ```
 
-Reads `replyke.json` to determine platform, style, and install path. Downloads files, transforms imports, and generates a barrel `index.ts`.
+Reads `sublay.json` to determine platform, style, and install path. Downloads files, transforms imports, and generates a barrel `index.ts`.
 
 ---
 
@@ -101,7 +101,7 @@ Components are distributed as **source code** (not npm packages), following the 
 ```
 cli/
 ├── packages/
-│   └── cli/                      # CLI tool (@replyke/cli)
+│   └── cli/                      # CLI tool (@sublay/cli)
 │       ├── src/
 │       │   ├── index.ts           # Entry point
 │       │   ├── commands/
