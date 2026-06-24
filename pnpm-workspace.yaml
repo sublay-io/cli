@@ -5,9 +5,9 @@ packages:
 allowBuilds:
   esbuild: true
 minimumReleaseAgeExclude:
-  - '@sublay/core@7.0.3'
-  - '@sublay/expo@7.0.3'
-  - '@sublay/react-js@7.0.3'
-  - '@sublay/react-native@7.0.3'
   - '@sublay/ui-core-react-js@7.0.0'
   - '@sublay/ui-core-react-native@7.0.0'
+  - '@sublay/core@7.6.1'
+  - '@sublay/expo@7.6.1'
+  - '@sublay/react-js@7.6.1'
+  - '@sublay/react-native@7.6.1'
