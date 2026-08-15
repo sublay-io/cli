@@ -3,10 +3,12 @@ packages:
   - 'registry'
   - 'playground'
 allowBuilds:
+  '@firebase/util': set this to true or false
   esbuild: true
+  protobufjs: set this to true or false
 minimumReleaseAgeExclude:
-  - '@sublay/ui-core-react-js@7.0.0'
-  - '@sublay/ui-core-react-native@7.0.0'
+  - '@sublay/ui-core-react-js@7.1.0'
+  - '@sublay/ui-core-react-native@7.1.0'
   - '@sublay/core@7.6.1'
   - '@sublay/expo@7.6.1'
   - '@sublay/react-js@7.6.1'
